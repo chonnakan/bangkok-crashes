@@ -1,8 +1,8 @@
 var map = L.map('map', {
     zoomControl: false,
-    center: [41.763, -72.675],
-    zoom: 15,
-    minZoom: 12,
+    center: [13.765022571670295, 100.53645324625809],
+    zoom: 12,
+    minZoom: 11,
     attributionControl: false,
     preferCanvas: true
 })
@@ -36,8 +36,8 @@ function tsToDate(ts) {
     });
 }
 
-var initFrom = dateToTS(new Date(2020, 0, 1));
-var initTo = dateToTS(new Date(2020, 7, 31));
+var initFrom = dateToTS(new Date(2019, 0, 1));
+var initTo = dateToTS(new Date(2021, 11, 31));
 
 Papa.parse('./data/crashes.csv', {
     download: true,
@@ -58,7 +58,7 @@ Papa.parse('./data/crashes.csv', {
                 : ('From ' + formattedFrom + ' to ' + formattedTo)
 
             text += ', there ' + (crashesTotal === 1 ? 'was ' : 'were ') + (crashesTotal === 0 ? 'no' : crashesTotal.toLocaleString())
-            text += ' car crash' + (crashesTotal === 1 ? '' : 'es') + ' in Hartford.'
+            text += ' car crash' + (crashesTotal === 1 ? '' : 'es') + ' in Bangkok.'
 
             if (crashesTotal > 1) {
                 text += ' Of those, ' + (crashesPed > 0 ? crashesPed.toLocaleString() : ' none');
@@ -88,16 +88,10 @@ Papa.parse('./data/crashes.csv', {
             })
 
             var crashesFiltered = crashes.filter(function (point) {
-                return (($('#local').prop('checked') ? point.r !== 1 : false)
-                    || ($('#highways').prop('checked') ? point.r === 1 : false))
-
-                    && (($('#vehiclesOnly').prop('checked') ? (point.c === 0 && point.p === 0) : false)
+                return (($('#vehiclesOnly').prop('checked') ? (point.c === 0 && point.p === 0) : false)
                         || ($('#cyclists').prop('checked') ? point.c === 1 : false)
                         || ($('#pedestrians').prop('checked') ? point.p === 1 : false))
 
-                    && (($('#propertyDamage').prop('checked') ? point.s === 'O' : false)
-                        || ($('#injury').prop('checked') ? point.s === 'A' : false)
-                        || ($('#fatal').prop('checked') ? point.s === 'K' : false))
             });
 
             updateStatsText(
@@ -132,8 +126,7 @@ Papa.parse('./data/crashes.csv', {
                         weight: 0,
                     }).bindPopup(
                         '<strong>Crash ID ' + crash.id + '</strong><br />'
-                        + tsToDate(crash.d * tsCoef) + ' at ' + crash.t
-                        + '<a href="' + diagramUrl + '" target="_blank"><img src="' + diagramUrl + '" alt="Crash diagram" /></a>'
+                        + tsToDate(crash.d * tsCoef)
                         + '<br />Severity: ' + (crash.s === 'K' ? 'Fatal crash' : crash.s === 'A' ? 'Injury of any type' : 'Property damage only'),
                         { minWidth: 300 }
                     )
@@ -158,8 +151,8 @@ Papa.parse('./data/crashes.csv', {
         var slider = $(".js-range-slider").ionRangeSlider({
             type: 'double',
 
-            min: dateToTS(new Date(2015, 0, 1)),
-            max: dateToTS(new Date(2020, 7, 31)),
+            min: dateToTS(new Date(2011, 0, 1)),
+            max: dateToTS(new Date(2021, 12, 31)),
 
             from: initFrom,
             to: initTo,
@@ -202,13 +195,12 @@ Papa.parse('./data/crashes.csv', {
 
         // Set default properties
         $('#filters input').prop('checked', 'checked');
-        $('#intensity').val(5);
+        $('#intensity').val(15);
         updateHeatLayer(initFrom, initTo);
-
     }
 })
 
 L.control.attribution({
-    prefix: 'View <a href="https://github.com/Picturedigits/hartford-crashes">code on GitHub</a> \
-      by Picturedigits for <a href="https://www.ctprf.org/programs_services/transport-hartford/" target="_blank">TransportHartford</a>'
+    prefix: 'Fork from Picturedigits <a href="https://github.com/Picturedigits/hartford-crashes">code on GitHub</a> \
+      by Chonnakan for <a href="https://www.ctprf.org/programs_services/transport-hartford/" target="_blank">PIER Statistics</a>'
 }).addTo(map)
