@@ -37,7 +37,7 @@ function tsToDate(ts) {
 }
 
 var initFrom = dateToTS(new Date(2019, 0, 1));
-var initTo = dateToTS(new Date(2021, 11, 31));
+var initTo = dateToTS(new Date(2021, 8, 30));
 
 Papa.parse('./data/crashes.csv', {
     download: true,
@@ -152,7 +152,7 @@ Papa.parse('./data/crashes.csv', {
             type: 'double',
 
             min: dateToTS(new Date(2011, 0, 1)),
-            max: dateToTS(new Date(2021, 12, 31)),
+            max: dateToTS(new Date(2021, 8, 30)),
 
             from: initFrom,
             to: initTo,
