@@ -36,8 +36,8 @@ function tsToDate(ts) {
     });
 }
 
-var initFrom = dateToTS(new Date(2019, 0, 1));
-var initTo = dateToTS(new Date(2021, 8, 30));
+var initFrom = dateToTS(new Date(2011, 0, 1));
+var initTo = dateToTS(new Date(2021, 8, 29));
 
 Papa.parse('./data/crashes.csv', {
     download: true,
@@ -58,7 +58,7 @@ Papa.parse('./data/crashes.csv', {
                 : ('From ' + formattedFrom + ' to ' + formattedTo)
 
             text += ', there ' + (crashesTotal === 1 ? 'was ' : 'were ') + (crashesTotal === 0 ? 'no' : crashesTotal.toLocaleString())
-            text += ' car crash' + (crashesTotal === 1 ? '' : 'es') + ' in Bangkok.'
+            text += ' deaths from car crash' + (crashesTotal === 1 ? '' : 'es') + ' in Bangkok.'
 
             if (crashesTotal > 1) {
                 text += ' Of those, ' + (crashesPed > 0 ? crashesPed.toLocaleString() : ' none');
@@ -68,8 +68,8 @@ Papa.parse('./data/crashes.csv', {
             }
 
             text += ' <span class="i ' + (filtered ? '' : 'red') + '">'
-                + (filtered ? filtered.toLocaleString() : 'No ') + ' crash'
-                + (filtered === 1 ? '' : 'es') + ' satisf' + (filtered === 1 ? 'ies' : 'y')
+                + (filtered ? filtered.toLocaleString() : 'No ') + ' death'
+                + (filtered === 1 ? '' : 's') + ' satisf' + (filtered === 1 ? 'ies' : 'y')
                 + ' your filtering criteria.</span>'
 
             $('#statsText').html(text)
@@ -152,7 +152,7 @@ Papa.parse('./data/crashes.csv', {
             type: 'double',
 
             min: dateToTS(new Date(2011, 0, 1)),
-            max: dateToTS(new Date(2021, 8, 30)),
+            max: dateToTS(new Date(2021, 8, 29)),
 
             from: initFrom,
             to: initTo,
