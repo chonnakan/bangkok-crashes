@@ -202,5 +202,5 @@ Papa.parse('./data/crashes.csv', {
 
 L.control.attribution({
     prefix: 'Fork from Picturedigits <a href="https://github.com/Picturedigits/hartford-crashes">code on GitHub</a> \
-      by Chonnakan for <a href="https://www.ctprf.org/programs_services/transport-hartford/" target="_blank">PIER Statistics</a>'
+      by Chonnakan for <a href="https://www.pier.or.th/blog/2022/0101/" target="_blank">PIER Statistics</a>'
 }).addTo(map)
